@@ -3,5 +3,6 @@
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
+    $avatar = App\Models\User::find(1)->avatar;
+    return view('avatar', compact('avatar'));
 });
