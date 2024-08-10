@@ -3,20 +3,26 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
+use App\Models\User;
+use Illuminate\Http\Request;
 
 class ForgotPasswordController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Password Reset Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller is responsible for handling password reset emails and
-    | includes a trait which assists in sending these notifications from
-    | your application to your users. Feel free to explore this trait.
-    |
-    */
+    public function showForgotPasswordForm()
+    {
+        return view('auth.forgot-password');
+    }
 
-    use SendsPasswordResetEmails;
+    public function forgotPassword(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email',
+        ]);
+        $user = User::where('email', $request->email)->first();
+        if ($user) {
+            $user->sendPasswordResetNotification($user->createToken());
+            return back()->with('success', 'Password reset link sent to your email.');
+        }
+        return back()->withErrors(['email' => 'User not found.']);
+    }
 }

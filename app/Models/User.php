@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Auth;
 
 class User extends Authenticatable
 {
@@ -114,14 +115,15 @@ class User extends Authenticatable
      * @param  string  $password
      * @return bool
      */
-    public function attemptLogin($password)
+    public function attemptLogin($credentials, $remember = false)
     {
         if ($this->try_login >= 3) {
             return false;
         }
-        if ($this->checkPassword($password)) {
+        if (Auth::attempt($credentials, $remember)) {
             $this->resetLoginAttempts();
             $this->updateLoginDetails();
+            request()->session()->regenerate();
             return true;
         } else {
             $this->incrementLoginAttempts();
@@ -160,5 +162,15 @@ class User extends Authenticatable
             'last_login_device' => request()->header('User-Agent'),
             'last_login_browser' => request()->header('User-Agent'),
         ]);
+    }
+    /**
+     * Check the user's password.
+     *
+     * @param  string  $password
+     * @return bool
+     */
+    protected function checkPassword($credentials, $remember = false)
+    {
+        return Auth::attempt($credentials, $remember);
     }
 }

@@ -24,6 +24,15 @@ class AuthController extends Controller
         Auth::login($user);
         return redirect()->intended('home')->with('success', 'Registration successful.');
     }
+    public function showRegistrationForm()
+    {
+        return view('auth.register');
+    }
+    public function showLoginForm()
+    {
+        Auth::logout();
+        return view('auth.login');
+    }
     public function login(Request $request)
     {
         $request->validate([
@@ -34,18 +43,16 @@ class AuthController extends Controller
         $credentials = $request->only('email', 'password');
         $remember = $request->filled('remember');
         $user = User::where('email', $credentials['email'])->first();
-        if ($user && $user->attemptLogin($credentials['password'])) {
-            Auth::attempt([
-                'email' => $credentials['email'],
-                'password' => $credentials['password'],
-            ], $remember);
+        if ($user && $user->attemptLogin($credentials, $remember)) {
             return redirect()->intended('home')->with('success', 'Login successful.');
         }
         return back()->withErrors(['email' => 'Invalid credentials or too many login attempts.']);
     }
-    public function logout()
+    public function logout(Request $request)
     {
         Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
         return redirect('/login')->with('success', 'Logged out successfully.');
     }
 }
