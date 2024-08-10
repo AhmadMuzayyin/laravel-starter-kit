@@ -7,9 +7,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::middleware(['auth'])->group(function () {
-    // Route::get('dashboard', function () {
-    //     return view('dashboard');
-    // })->name('dashboard');
     Route::get('/home', [App\Http\Controllers\Home\HomeController::class, 'root']);
     // Route::get('{any}', [App\Http\Controllers\Home\HomeController::class, 'index'])->name('index');
 
