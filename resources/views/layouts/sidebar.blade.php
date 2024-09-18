@@ -34,7 +34,7 @@
             <ul class="metismenu list-unstyled" id="side-menu">
                 <li class="menu-title" data-key="t-menu">Dashboard</li>
 
-               <li>
+                <li>
                     <a href="javascript: void(0);">
                         <i class="bx bx-home-alt icon nav-icon"></i>
                         <span class="menu-item" data-key="t-dashboard">Dashboard</span>
@@ -105,7 +105,7 @@
                     </ul>
                 </li>
 
-               
+
 
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
@@ -131,7 +131,7 @@
                 </li>
 
                 <li class="menu-title" data-key="t-layouts">Layouts</li>
-                
+
                 <li>
                     <a href="layouts-horizontal">
                         <i class="bx bx-layout icon nav-icon"></i>
@@ -250,8 +250,10 @@
                         <li><a href="auth-lock-screen" data-key="t-lock-screen">Lock Screen</a></li>
                         <li><a href="auth-logout" data-key="t-logout">Logout</a></li>
                         <li><a href="auth-confirm-mail" data-key="t-confirm-mail">Confirm Mail</a></li>
-                        <li><a href="auth-email-verification" data-key="t-email-verification">Email Verification</a></li>
-                        <li><a href="auth-two-step-verification" data-key="t-two-step-verification">Two Step Verification</a></li>
+                        <li><a href="auth-email-verification" data-key="t-email-verification">Email Verification</a>
+                        </li>
+                        <li><a href="auth-two-step-verification" data-key="t-two-step-verification">Two Step
+                                Verification</a></li>
                     </ul>
                 </li>
 
@@ -286,6 +288,18 @@
                                 <li><a href="javascript: void(0);" data-key="t-level-2.2">Level 2.2</a></li>
                             </ul>
                         </li>
+                    </ul>
+                </li>
+
+                {{-- Roles --}}
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow">
+                        <i class="bx bx-cog icon nav-icon"></i>
+                        <span class="menu-item" data-key="Settings">Settings</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="true">
+                        <li><a href="javascript: void(0);" data-key="Users">Users</a></li>
+                        <li><a href="{{ route('roles.index') }}" data-key="Roles">Roles</a></li>
                     </ul>
                 </li>
 
